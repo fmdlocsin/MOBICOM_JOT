@@ -15,7 +15,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private EditText etEmail, etPassword, etUsername, etBirthday;
+    private EditText etEmail, etPassword, etUsername;
     private Button btnRegister;
 
     private FirebaseAuth mAuth;
@@ -32,7 +32,12 @@ public class RegisterActivity extends AppCompatActivity {
         etUsername = findViewById(R.id.registerName);
         btnRegister = findViewById(R.id.btnRegister);
 
-        btnRegister.setOnClickListener(v -> registerUser());
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                registerUser();
+            }
+        });
     }
 
     private void registerUser() {
