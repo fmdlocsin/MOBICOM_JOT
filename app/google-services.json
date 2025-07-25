@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "348668404696",
+    "project_id": "jotapp-7a829",
+    "storage_bucket": "jotapp-7a829.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:348668404696:android:f5f1ebeb4187ae8c1188ad",
+        "android_client_info": {
+          "package_name": "com.mobicom.mco3"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCkqruLH1NNjZDKDFZ-T0rOmRw48GXBuP0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

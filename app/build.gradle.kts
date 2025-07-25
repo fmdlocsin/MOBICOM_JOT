@@ -1,14 +1,14 @@
 plugins {
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.google.services)
+    id("com.android.application")
+    id("com.google.gms.google-services")
 }
 
 android {
-    namespace = "com.example.mco1views"
+    namespace = "com.mobicom.mco3"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.mco1views"
+        applicationId = "com.mobicom.mco3"
         minSdk = 27
         targetSdk = 35
         versionCode = 1
@@ -44,6 +44,6 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
-    implementation("com.google.firebase:firebase-auth:22.3.0")
-    implementation("com.google.firebase:firebase-firestore:24.10.0")
+    implementation(platform("com.google.firebase:firebase-bom:34.0.0"))
+    implementation("com.google.firebase:firebase-auth")
 }

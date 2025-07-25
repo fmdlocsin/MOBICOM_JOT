@@ -1,4 +1,4 @@
-package com.example.mco1views;
+package com.mobicom.mco3;
 
 import android.os.Bundle;
 
