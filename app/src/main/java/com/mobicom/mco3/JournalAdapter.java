@@ -50,10 +50,10 @@ public class JournalAdapter extends RecyclerView.Adapter<JournalAdapter.EntryVie
 
         public EntryViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvTitle = itemView.findViewById(R.id.tvTitle);
-            tvReflection = itemView.findViewById(R.id.tvReflection);
-            tvMood = itemView.findViewById(R.id.tvMood);
-            tvTimestamp = itemView.findViewById(R.id.tvTimestamp);
+            tvTitle = itemView.findViewById(R.id.textTitle);
+            tvReflection = itemView.findViewById(R.id.textContent);
+            tvMood = itemView.findViewById(R.id.textMood);
+            tvTimestamp = itemView.findViewById(R.id.textTimestamp);
         }
     }
 }
