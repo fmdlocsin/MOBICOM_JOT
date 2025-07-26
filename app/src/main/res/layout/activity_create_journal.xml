@@ -17,22 +17,38 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <!-- Mood / Title -->
+                <!-- Title bit -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Mood or Title"
+                    android:hint="Title"
                     app:boxBackgroundColor="@color/white"
                     app:boxStrokeColor="@color/darker">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/inputMood"
+                        android:id="@+id/inputTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <!-- Reflection -->
+                <!--Mood Spinner -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Select your mood:"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <Spinner
+                    android:id="@+id/spinnerMood"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:background="@color/white" />
+
+                <!-- Content -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -51,7 +67,7 @@
                         android:textColor="@color/black" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <!-- Optional Preview Image -->
+                <!-- Optional Preview Image bit -->
                 <ImageView
                     android:id="@+id/imagePreview"
                     android:layout_width="match_parent"
@@ -64,8 +80,6 @@
                     android:adjustViewBounds="true" />
 
                 <!-- Add Image Button -->
-                <!-- Save Entry Button -->
-
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnAddImage"
                     android:layout_width="match_parent"
@@ -81,11 +95,12 @@
                     app:strokeColor="@color/black"
                     app:strokeWidth="1dp" />
 
+                <!-- Save Entry Button -->
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnSaveEntry"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="dp"
+                    android:layout_marginTop="16dp"
                     android:text="Save Entry"
                     android:textColor="@color/black"
                     app:backgroundTint="@color/white"

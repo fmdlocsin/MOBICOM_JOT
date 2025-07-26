@@ -13,15 +13,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MCO1views"
         tools:targetApi="31">
+
+        <activity android:name="com.mobicom.mco3.AddJournalActivity" />
+
         <activity
             android:name="com.mobicom.mco3.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
+
 
 </manifest>

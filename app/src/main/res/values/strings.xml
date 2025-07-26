@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">MCO1views</string>
+
+    <string-array name="mood_options">
+        <item>Happy</item>
+        <item>Sad</item>
+        <item>Calm</item>
+        <item>Excited</item>
+        <item>Angry</item>
+    </string-array>
 </resources>
