@@ -3,9 +3,9 @@
 
     <string-array name="mood_options">
         <item>Happy</item>
-        <item>Sad</item>
-        <item>Calm</item>
         <item>Excited</item>
+        <item>Calm</item>
+        <item>Sad</item>
         <item>Angry</item>
     </string-array>
 </resources>

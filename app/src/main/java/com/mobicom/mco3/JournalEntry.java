@@ -33,4 +33,12 @@ public class JournalEntry {
     public Date getTimestamp() {
         return timestamp;
     }
+
+    public void setTitle(String title) {this.title = title;}
+
+    public void setMood(String mood) { this.mood = mood;}
+
+    public void setReflection(String reflection) { this.reflection = reflection;}
+
+    public void setTimestamp(Date timestamp) { this.timestamp = timestamp;}
 }
