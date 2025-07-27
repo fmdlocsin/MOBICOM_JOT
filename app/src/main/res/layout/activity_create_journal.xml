@@ -6,24 +6,27 @@
         android:layout_height="match_parent"
         android:background="@color/lighter">
 
-        <ScrollView
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="24dp"
             android:fillViewport="true">
 
             <LinearLayout
+                android:id="@+id/containerMood"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:gravity="center_horizontal">
 
-                <!-- Title bit -->
+            <!-- Title Input -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Title"
+                    android:hint="What's the vibe today?"
                     app:boxBackgroundColor="@color/white"
-                    app:boxStrokeColor="@color/darker">
+                    app:boxStrokeColor="@color/darker"
+                    app:boxElevation="4dp">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/inputTitle"
@@ -32,12 +35,13 @@
                         android:textColor="@color/black" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <!--Mood Spinner -->
+                <!-- Mood Spinner -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="Select your mood:"
+                    android:layout_marginTop="6dp"
+                    android:layout_gravity="start"
+                    android:text="How are we feeling?"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 
@@ -46,28 +50,30 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:background="@color/white" />
+                    android:background="@drawable/spinner_outline" />
 
-                <!-- Content -->
+                <!-- Reflection Input -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:hint="What’s on your mind?"
                     app:boxBackgroundColor="@color/white"
-                    app:boxStrokeColor="@color/darker">
+                    app:boxStrokeColor="@color/darker"
+                    app:boxElevation="4dp">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/inputReflection"
                         android:layout_width="match_parent"
-                        android:layout_height="609dp"
+                        android:layout_height="wrap_content"
+                        android:minHeight="200dp"
                         android:gravity="top"
                         android:inputType="textMultiLine"
-                        android:maxLines="6"
+                        android:maxLines="10"
                         android:textColor="@color/black" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <!-- Optional Preview Image bit -->
+                <!-- Image Preview -->
                 <ImageView
                     android:id="@+id/imagePreview"
                     android:layout_width="match_parent"
@@ -100,15 +106,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
+                    android:layout_marginBottom="24dp"
                     android:text="Save Entry"
                     android:textColor="@color/black"
                     app:backgroundTint="@color/white"
                     app:strokeColor="@color/black"
                     app:strokeWidth="1dp"
                     app:cornerRadius="12dp" />
-
             </LinearLayout>
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
