@@ -15,7 +15,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private EditText etEmail, etPassword, etUsername;
+    private EditText etEmail, etPassword;
     private Button btnRegister;
 
     private FirebaseAuth mAuth;
