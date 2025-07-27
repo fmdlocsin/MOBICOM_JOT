@@ -51,10 +51,40 @@ public class FirebaseHelper {
                     List<JournalEntry> entries = new ArrayList<>();
                     for (DocumentSnapshot doc : queryDocumentSnapshots) {
                         JournalEntry entry = doc.toObject(JournalEntry.class);
-                        entries.add(entry);
+                        if (entry != null) {
+                            entry.setId(doc.getId());
+                            entries.add(entry);
+                        }
                     }
                     onSuccess.onSuccess(entries);
                 })
                 .addOnFailureListener(onFailure);
     }
+    public void getJournalEntryById(String entryId,
+                                    OnSuccessListener<JournalEntry> onSuccess,
+                                    OnFailureListener onFailure) {
+        if (user == null) {
+            onFailure.onFailure(new Exception("No authenticated user"));
+            return;
+        }
+
+        db.collection("users")
+                .document(user.getUid())
+                .collection("entries")
+                .document(entryId)
+                .get()
+                .addOnSuccessListener(doc -> {
+                    JournalEntry entry = doc.toObject(JournalEntry.class);
+                    if (entry != null) {
+                        entry.setId(doc.getId());
+                        onSuccess.onSuccess(entry);
+                    } else {
+                        onFailure.onFailure(new Exception("Entry not found"));
+                    }
+                })
+                .addOnFailureListener(onFailure);
+    }
+
+
+
 }

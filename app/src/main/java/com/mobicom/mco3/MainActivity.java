@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.journalRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new JournalAdapter(journalList);
+        adapter = new JournalAdapter(this, journalList);
         recyclerView.setAdapter(adapter);
 
         btnNewEntry = findViewById(R.id.btnNewEntry);
@@ -60,7 +60,6 @@ public class MainActivity extends AppCompatActivity {
                 },
                 e -> Toast.makeText(MainActivity.this, "Error loading entries", Toast.LENGTH_SHORT).show()
         );
-        Log.d("MainActivity", "Loaded entries: " + journalList.size());
     }
     @Override
     protected void onResume() {

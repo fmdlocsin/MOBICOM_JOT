@@ -58,7 +58,7 @@ public class AddJournalActivity extends AppCompatActivity {
             return;
         }
 
-        JournalEntry entry = new JournalEntry(title, reflection, mood, Timestamp.now().toDate());
+        JournalEntry entry = new JournalEntry(title, reflection, mood, Timestamp.now());
         firebaseHelper.saveEntry(entry,
                 unused -> {
                     Toast.makeText(this, "Entry saved!", Toast.LENGTH_SHORT).show();

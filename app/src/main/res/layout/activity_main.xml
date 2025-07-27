@@ -1,19 +1,10 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/lighter">
-
-        <!-- RecyclerView for journal entries -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/journalRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="16dp"
-            android:clipToPadding="false"
-            android:scrollbars="vertical" />
 
         <!-- Top-right "Playlist of the Week" button -->
         <com.google.android.material.button.MaterialButton
@@ -28,16 +19,27 @@
             app:cornerRadius="12dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="24dp"
-            android:layout_gravity="top|end" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- RecyclerView positioned below Playlist button -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/journalRecyclerView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:clipToPadding="false"
+            android:padding="16dp"
+            android:scrollbars="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnPlaylist" />
 
         <!-- Bottom "New Entry" FAB style button -->
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/btnNewEntry"
             android:layout_width="184dp"
             android:layout_height="67dp"
-            android:layout_gravity="bottom|center_horizontal"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="32dp"
             android:text="New Entry"
             android:textColor="@color/black"
             app:backgroundTint="@color/white"
@@ -45,7 +47,11 @@
             app:iconPadding="8dp"
             app:iconTint="@color/black"
             app:strokeColor="@color/black"
-            app:strokeWidth="1dp" />
+            app:strokeWidth="1dp"
+            android:layout_marginBottom="32dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

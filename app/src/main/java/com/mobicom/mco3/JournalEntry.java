@@ -1,17 +1,17 @@
 package com.mobicom.mco3;
 
-import java.util.Date;
-
-public class JournalEntry {
+import java.io.Serializable;
+import com.google.firebase.Timestamp;
+public class JournalEntry implements Serializable {
     private String title;
     private String reflection;
     private String mood;
-    private Date timestamp;
-
+    private Timestamp timestamp;
+    private String id;
     //This one is for the firestone bit
     public JournalEntry() {}
 
-    public JournalEntry(String title, String reflection, String mood, Date timestamp) {
+    public JournalEntry(String title, String reflection, String mood, Timestamp timestamp) {
         this.title = title;
         this.reflection = reflection;
         this.mood = mood;
@@ -30,7 +30,7 @@ public class JournalEntry {
         return mood;
     }
 
-    public Date getTimestamp() {
+    public Timestamp getTimestamp() {
         return timestamp;
     }
 
@@ -40,5 +40,14 @@ public class JournalEntry {
 
     public void setReflection(String reflection) { this.reflection = reflection;}
 
-    public void setTimestamp(Date timestamp) { this.timestamp = timestamp;}
+
+    public void setTimestamp(Timestamp timestamp) { this.timestamp = timestamp; }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 }

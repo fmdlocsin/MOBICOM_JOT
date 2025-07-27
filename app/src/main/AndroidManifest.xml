@@ -17,6 +17,8 @@
         <activity android:name="com.mobicom.mco3.AddJournalActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".MainActivity"/>
+        <activity android:name=".DetailActivity" />
+        <activity android:name=".EditJournalActivity" />
         <activity
             android:name="com.mobicom.mco3.LoginActivity"
             android:exported="true">
