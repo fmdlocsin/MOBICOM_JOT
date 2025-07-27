@@ -26,6 +26,8 @@
             app:cardElevation="6dp"
             app:cardCornerRadius="16dp"
             app:cardBackgroundColor="@color/darker"
+            app:strokeColor="@color/black"
+            app:strokeWidth="1dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
