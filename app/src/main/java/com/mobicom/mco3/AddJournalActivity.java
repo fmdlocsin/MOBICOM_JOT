@@ -11,12 +11,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.Timestamp;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 public class AddJournalActivity extends AppCompatActivity {
 
@@ -24,23 +18,21 @@ public class AddJournalActivity extends AppCompatActivity {
     private Spinner spinnerMood;
     private Button btnSave;
 
-    private FirebaseAuth mAuth;
-    private FirebaseFirestore db;
+    private FirebaseHelper firebaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_journal);
 
-        mAuth = FirebaseAuth.getInstance();
-        db = FirebaseFirestore.getInstance();
+        firebaseHelper = new FirebaseHelper();
 
         etTitle = findViewById(R.id.inputTitle);
         etReflection = findViewById(R.id.inputReflection);
         spinnerMood = findViewById(R.id.spinnerMood);
         btnSave = findViewById(R.id.btnSaveEntry);
 
-        // Load mood choices
+        // Setup mood options
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
                 this, R.array.mood_options, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -66,31 +58,16 @@ public class AddJournalActivity extends AppCompatActivity {
             return;
         }
 
-        if (mAuth.getCurrentUser() == null) {
-            Toast.makeText(this, "User not logged in", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        String uid = mAuth.getCurrentUser().getUid();
-
-        Map<String, Object> entry = new HashMap<>();
-        entry.put("title", title);
-        entry.put("reflection", reflection);
-        entry.put("mood", mood);
-        entry.put("timestamp", Timestamp.now());
-
-        db.collection("users")
-                .document(uid)
-                .collection("entries")
-                .add(entry)
-                .addOnSuccessListener(documentReference -> {
+        JournalEntry entry = new JournalEntry(title, reflection, mood, Timestamp.now().toDate());
+        firebaseHelper.saveEntry(entry,
+                unused -> {
                     Toast.makeText(this, "Entry saved!", Toast.LENGTH_SHORT).show();
                     etTitle.setText("");
                     etReflection.setText("");
                     spinnerMood.setSelection(0);
-                })
-                .addOnFailureListener(e -> {
-                    Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                });
+                },
+                e -> Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_LONG).show()
+
+        );
     }
 }

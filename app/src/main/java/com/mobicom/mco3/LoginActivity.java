@@ -6,8 +6,8 @@ import android.text.TextUtils;
 import android.util.Patterns;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,6 +29,12 @@ public class LoginActivity extends AppCompatActivity {
         etEmail = findViewById(R.id.loginEmail);
         etPassword = findViewById(R.id.loginPassword);
         btnLogin = findViewById(R.id.btnLogin);
+
+        TextView tvRegisterLink = findViewById(R.id.tvRegisterLink);
+        tvRegisterLink.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+            startActivity(intent);
+        });
 
         btnLogin.setOnClickListener(v -> loginUser());
     }

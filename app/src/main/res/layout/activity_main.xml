@@ -42,7 +42,6 @@
             android:textColor="@color/black"
             app:backgroundTint="@color/white"
             app:cornerRadius="16dp"
-            app:icon="@drawable/ic_edit"
             app:iconPadding="8dp"
             app:iconTint="@color/black"
             app:strokeColor="@color/black"
