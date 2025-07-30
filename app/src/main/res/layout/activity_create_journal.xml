@@ -25,8 +25,8 @@
                     android:layout_height="wrap_content"
                     android:hint="What's the vibe today?"
                     app:boxBackgroundColor="@color/white"
-                    app:boxStrokeColor="@color/darker"
-                    app:boxElevation="4dp">
+                    app:boxStrokeColor="@color/darker">
+                    <!--app:boxElevation="4dp"-->
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/inputTitle"
@@ -59,8 +59,8 @@
                     android:layout_marginTop="16dp"
                     android:hint="What’s on your mind?"
                     app:boxBackgroundColor="@color/white"
-                    app:boxStrokeColor="@color/darker"
-                    app:boxElevation="4dp">
+                    app:boxStrokeColor="@color/darker">
+                    <!--app:boxElevation="4dp"-->
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/inputReflection"
