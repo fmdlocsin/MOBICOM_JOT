@@ -32,6 +32,12 @@ public class AddJournalActivity extends AppCompatActivity {
         spinnerMood = findViewById(R.id.spinnerMood);
         btnSave = findViewById(R.id.btnSaveEntry);
 
+        //Back button stuff
+        findViewById(R.id.btnBack).setOnClickListener(v -> {
+            finish();
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.slide_out_right);
+        });
+
         // Setup mood options
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
                 this, R.array.mood_options, android.R.layout.simple_spinner_item);
