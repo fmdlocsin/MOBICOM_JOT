@@ -18,12 +18,12 @@ object SpotifyMoodHelper {
             "https://open.spotify.com/playlist/2voVtnSJo3HtHakP5GwguH",
             "https://open.spotify.com/playlist/6g8iIbGXVF3EPbCPiIsqzs"
         ),
-        "Anxious" to listOf(
+        "Excited" to listOf(
             "https://open.spotify.com/playlist/6H1Ko0YewQSX8qGityoEiT",
             "https://open.spotify.com/playlist/663aQVlsLjtCQRdUUlZVLm",
             "https://open.spotify.com/playlist/3VjzFQmfGYVWQ58R5054bA"
         ),
-        "Relaxed" to listOf(
+        "Calm" to listOf(
             "https://open.spotify.com/playlist/1REyNbQcJZeTNWelZQPEV9",
             "https://open.spotify.com/playlist/7f9K2gpJsg73o411xgoqMp",
             "https://open.spotify.com/playlist/4OM4EzM5FaajaxkRmCvKZ4"
