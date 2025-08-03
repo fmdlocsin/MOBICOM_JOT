@@ -42,12 +42,22 @@
                     android:text="Here's a playlist to match your mood."
                     android:layout_marginTop="4dp" />
 
+                <!-- Fake Widget Button -->
                 <Button
                     android:id="@+id/btn_listen_spotify"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Listen on Spotify"
-                    android:layout_marginTop="12dp" />
+                    android:textColor="@android:color/white"
+                    android:backgroundTint="@android:color/black"
+                    app:icon="@drawable/ic_spotify_logo"
+                    app:iconPadding="8dp"
+                    app:iconGravity="textStart"
+                    app:iconSize="24dp"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="10dp"
+                    android:layout_marginTop="12dp"
+                    android:textStyle="bold"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -64,7 +74,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <!-- New Entry -->
+        <!-- New Entry Button -->
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/btnNewEntry"
             android:layout_width="184dp"
