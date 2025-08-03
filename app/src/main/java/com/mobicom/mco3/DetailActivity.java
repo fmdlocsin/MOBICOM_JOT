@@ -1,7 +1,14 @@
 package com.mobicom.mco3;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Base64;
+import android.view.View;
+import android.widget.GridLayout;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
@@ -15,7 +22,7 @@ import com.mobicom.mco3.databinding.ActivityDetailBinding;
 
 import java.text.SimpleDateFormat;
 import java.util.Locale;
-
+import java.util.List;
 public class DetailActivity extends AppCompatActivity {
 
     private ActivityDetailBinding binding;
@@ -30,6 +37,9 @@ public class DetailActivity extends AppCompatActivity {
         binding = ActivityDetailBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        binding.mainContent.setVisibility(View.GONE);
+        binding.loadingIndicator.setVisibility(View.VISIBLE);
+
         db = FirebaseFirestore.getInstance();
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         entryId = getIntent().getStringExtra("entryId");
@@ -39,6 +49,119 @@ public class DetailActivity extends AppCompatActivity {
             finish();
             return;
         }
+
+        loadEntry();
+
+        // Setup buttons
+        binding.btnEdit.setOnClickListener(v -> {
+            Intent intent = new Intent(this, EditJournalActivity.class);
+            intent.putExtra("entryId", entry.getId());
+            startActivity(intent);
+        });
+
+        binding.btnDelete.setOnClickListener(v -> showDeleteConfirm());
+        binding.btnBack.setOnClickListener(v -> finish());
+
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                finish();
+            }
+        });
+    }
+
+    private void displayBase64Images(List<String> base64Images) {
+        if (base64Images == null || base64Images.isEmpty()) return;
+
+        androidx.gridlayout.widget.GridLayout gridLayout = binding.imageGrid;
+        gridLayout.removeAllViews();
+        gridLayout.setVisibility(View.VISIBLE);
+
+        int columns = 3;
+        int total = Math.min(base64Images.size(), 6);
+        int screenWidth = getResources().getDisplayMetrics().widthPixels;
+
+        int spacingPx = (int) (4 * getResources().getDisplayMetrics().density); // 4dp spacing
+        int totalSpacing = spacingPx * (columns + 1);
+        int imageSize = (screenWidth - totalSpacing) / columns;
+
+        gridLayout.setColumnCount(columns);
+
+        for (int i = 0; i < total; i++) {
+            String base64 = base64Images.get(i);
+            try {
+                byte[] decodedBytes = Base64.decode(base64, Base64.DEFAULT);
+                Bitmap bitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
+
+                ImageView imageView = new ImageView(this);
+                imageView.setImageBitmap(bitmap);
+                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
+                GridLayout.LayoutParams params = new GridLayout.LayoutParams();
+                params.width = imageSize;
+                params.height = imageSize;
+
+                int row = i / columns;
+                int col = i % columns;
+                params.setMargins(
+                        col == 0 ? spacingPx : spacingPx / 2,  // left
+                        row == 0 ? spacingPx : spacingPx / 2,  // top
+                        col == columns - 1 ? spacingPx : spacingPx / 2, // right
+                        spacingPx / 2                          // bottom
+                );
+
+                imageView.setLayoutParams(params);
+                imageView.setOnClickListener(v -> showImagePreviewDialog(bitmap));
+
+                gridLayout.addView(imageView);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void showImagePreviewDialog(Bitmap bitmap) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        ImageView imageView = new ImageView(this);
+        imageView.setImageBitmap(bitmap);
+        imageView.setAdjustViewBounds(true);
+        imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+
+        builder.setView(imageView);
+        builder.setPositiveButton("Close", (dialog, which) -> dialog.dismiss());
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+
+    private void showDeleteConfirm() {
+        new AlertDialog.Builder(this)
+                .setTitle("Delete Entry")
+                .setMessage("Are you sure you want to delete this journal entry?")
+                .setPositiveButton("Yes", (dialog, which) -> {
+                    db.collection("users").document(uid)
+                            .collection("entries").document(entry.getId()).delete()
+                            .addOnSuccessListener(aVoid -> {
+                                Toast.makeText(this, "Deleted", Toast.LENGTH_SHORT).show();
+                                finish();
+                            })
+                            .addOnFailureListener(e -> {
+                                Toast.makeText(this, "Delete failed", Toast.LENGTH_SHORT).show();
+                            });
+                })
+                .setNegativeButton("Cancel", null)
+                .show();
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadEntry(); // reload data when returning from EditJournalActivity
+    }
+
+    private void loadEntry() {
+        binding.mainContent.setVisibility(View.GONE);
+        binding.loadingIndicator.setVisibility(View.VISIBLE);
 
         db.collection("users")
                 .document(uid)
@@ -64,13 +187,10 @@ public class DetailActivity extends AppCompatActivity {
                                 binding.detailDate.setText("No date available");
                             }
 
-                            // Setup edit/delete buttons
-                            binding.btnEdit.setOnClickListener(v -> {
-                                Intent intent = new Intent(this, EditJournalActivity.class);
-                                intent.putExtra("entryId", entry.getId());  // JournalEntry implements Serializable
-                                startActivity(intent);
-                            });
-                            binding.btnDelete.setOnClickListener(v -> showDeleteConfirm());
+                            displayBase64Images(entry.getImageBase64List());
+
+                            binding.mainContent.setVisibility(View.VISIBLE);
+                            binding.loadingIndicator.setVisibility(View.GONE);
                         }
                     } else {
                         Toast.makeText(this, "Entry not found", Toast.LENGTH_SHORT).show();
@@ -81,31 +201,6 @@ public class DetailActivity extends AppCompatActivity {
                     Toast.makeText(this, "Failed to load entry", Toast.LENGTH_SHORT).show();
                     finish();
                 });
-
-        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                finish();
-            }
-        });
     }
 
-    private void showDeleteConfirm() {
-        new AlertDialog.Builder(this)
-                .setTitle("Delete Entry")
-                .setMessage("Are you sure you want to delete this journal entry?")
-                .setPositiveButton("Yes", (dialog, which) -> {
-                    db.collection("users").document(uid)
-                            .collection("entries").document(entry.getId()).delete()
-                            .addOnSuccessListener(aVoid -> {
-                                Toast.makeText(this, "Deleted", Toast.LENGTH_SHORT).show();
-                                finish();
-                            })
-                            .addOnFailureListener(e -> {
-                                Toast.makeText(this, "Delete failed", Toast.LENGTH_SHORT).show();
-                            });
-                })
-                .setNegativeButton("Cancel", null)
-                .show();
-    }
 }

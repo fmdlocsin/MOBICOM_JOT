@@ -29,11 +29,13 @@ public class MainActivity extends AppCompatActivity {
     private ExtendedFloatingActionButton btnNewEntry;
     private FirebaseHelper firebaseHelper;
 
+    private View progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        progressBar = findViewById(R.id.mainProgressBar);
         mAuth = FirebaseAuth.getInstance();
         firebaseHelper = new FirebaseHelper();
 
@@ -74,9 +76,11 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "User not logged in", Toast.LENGTH_SHORT).show();
             return;
         }
+        progressBar.setVisibility(View.VISIBLE);
 
         firebaseHelper.getJournalEntries(
                 entries -> {
+                    progressBar.setVisibility(View.GONE);
                     journalList.clear();
                     journalList.addAll(entries);
                     adapter.notifyDataSetChanged();
@@ -96,7 +100,11 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 },
-                e -> Toast.makeText(MainActivity.this, "Error loading entries", Toast.LENGTH_SHORT).show()
+
+                e -> {
+                    progressBar.setVisibility(View.GONE);
+                    Toast.makeText(MainActivity.this, "Error loading entries", Toast.LENGTH_SHORT).show();
+                }
         );
     }
 

@@ -14,6 +14,7 @@ firebaseFirestoreVersion = "26.0.0"
 firebaseDatabase = "22.0.0"
 kotlin = "2.2.0"
 coreKtx = "1.10.1"
+gridlayout = "1.1.0"
 
 
 [libraries]
@@ -27,6 +28,7 @@ constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayo
 firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore", version.ref = "firebaseFirestoreVersion" }
 firebase-database = { group = "com.google.firebase", name = "firebase-database", version.ref = "firebaseDatabase" }
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+gridlayout = { group = "androidx.gridlayout", name = "gridlayout", version.ref = "gridlayout" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

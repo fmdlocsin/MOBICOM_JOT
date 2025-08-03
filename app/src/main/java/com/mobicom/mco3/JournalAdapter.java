@@ -3,11 +3,17 @@ package com.mobicom.mco3;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.icu.text.SimpleDateFormat;
+import android.util.Base64;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -66,7 +72,7 @@ public class JournalAdapter extends RecyclerView.Adapter<JournalAdapter.EntryVie
         });
         holder.btnEdit.setOnClickListener(v -> {
             Intent intent = new Intent(v.getContext(), EditJournalActivity.class);
-            intent.putExtra("entryId", entry.getId());  // Make sure JournalEntry implements Serializable
+            intent.putExtra("entryId", entry.getId());
             v.getContext().startActivity(intent);
         });
 
@@ -91,16 +97,54 @@ public class JournalAdapter extends RecyclerView.Adapter<JournalAdapter.EntryVie
                     .setNegativeButton("Cancel", null)
                     .show();
         });
+        bindImages(entry.getImageBase64List(), holder.imageContainer);
     }
 
     @Override
     public int getItemCount() {
         return journalList.size();
     }
+    private void bindImages(List<String> imageBase64List, LinearLayout container) {
+        container.removeAllViews();
+
+        if (imageBase64List == null || imageBase64List.isEmpty()) {
+            ((View) container.getParent()).setVisibility(View.GONE);  // Hides the HorizontalScrollView
+            return;
+        }
+
+        ((View) container.getParent()).setVisibility(View.VISIBLE);  // Shows the HorizontalScrollView
+
+        int maxImages = Math.min(imageBase64List.size(), 3);  // Only first 3 for preview
+        int imageSize = (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP,
+                96,  // 96dp thumbnail size
+                context.getResources().getDisplayMetrics()
+        );
+
+        for (int i = 0; i < maxImages; i++) {
+            String base64 = imageBase64List.get(i);
+            try {
+                byte[] imageBytes = Base64.decode(base64, Base64.DEFAULT);
+                Bitmap bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+
+                ImageView imageView = new ImageView(context);
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(imageSize, imageSize);
+                params.setMargins(8, 4, 8, 4);  // small margin between images
+                imageView.setLayoutParams(params);
+                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                imageView.setImageBitmap(bitmap);
+
+                container.addView(imageView);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     static class EntryViewHolder extends RecyclerView.ViewHolder {
         TextView tvTitle, tvReflection, tvMood, tvTimestamp;
         ImageButton btnEdit, btnDelete;
+        LinearLayout imageContainer;
         public EntryViewHolder(@NonNull View itemView) {
             super(itemView);
             tvTitle = itemView.findViewById(R.id.textTitle);
@@ -109,7 +153,7 @@ public class JournalAdapter extends RecyclerView.Adapter<JournalAdapter.EntryVie
             tvTimestamp = itemView.findViewById(R.id.textTimestamp);
             btnEdit = itemView.findViewById(R.id.btnEdit);
             btnDelete = itemView.findViewById(R.id.btnDelete);
-
+            imageContainer = itemView.findViewById(R.id.imageContainer);
         }
     }
 }

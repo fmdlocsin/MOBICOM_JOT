@@ -47,9 +47,12 @@ dependencies {
     implementation(libs.constraintlayout)
     implementation(libs.firebase.firestore)
     implementation(libs.core.ktx)
+    implementation(libs.gridlayout)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
     implementation(platform("com.google.firebase:firebase-bom:34.0.0"))
     implementation("com.google.firebase:firebase-auth")
+    implementation ("com.google.android.flexbox:flexbox:3.0.0")
+    implementation ("com.github.bumptech.glide:glide:4.15.1")
 }
