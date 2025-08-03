@@ -48,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
         btnNewEntry.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, AddJournalActivity.class);
             startActivity(intent);
+            //This is a transition down here
+            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         });
 
         loadJournalEntries();
